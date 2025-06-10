@@ -8,7 +8,7 @@ import csv
 import osmnx as ox
 
 class RouteProcessor:
-    def __init__(self, osrm_base_url="http://localhost:5000"):
+    def __init__(self, osrm_base_url="https://router.project-osrm.org"):
         """
         Initialize the RouteProcessor with the base URL of the OSRM server and the geopy Nominatim geolocator.
         """

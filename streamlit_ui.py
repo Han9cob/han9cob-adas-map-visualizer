@@ -80,6 +80,10 @@ if "vehicle_idx" not in st.session_state:
     st.session_state.vehicle_idx = 0
 if "just_incremented" not in st.session_state:
     st.session_state.just_incremented = False
+if "speed_kmph" not in st.session_state or st.session_state["speed_kmph"] is None:
+    st.session_state["speed_kmph"] = 10  # or your preferred default
+speed_kmph = st.session_state["speed_kmph"]
+speed = speed_kmph // 10
 
 # --- Calculate Route Button ---
 if st.sidebar.button("Calculate Route"):
