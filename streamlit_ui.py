@@ -22,18 +22,25 @@ def get_adas_message(vehicle_idx, route_geometry, adas_segments):
 
         adas_str = ", ".join(seg["ADAS"]) if isinstance(seg["ADAS"], list) else str(seg["ADAS"])
 
+        # Before the start point (e.g., 5 points before)
+        if max(start_idx - 5, 0) <= vehicle_idx < start_idx and adas_str.lower() != "none":
+            return f"""
+                <div style='text-align: right; color: green; font-weight: bold; font-size: 18px;'>
+                    In 100 metres, Enable: {adas_str}
+                </div>
+            """
+        # From the start point until 10 points before end
+        if start_idx <= vehicle_idx < max(end_idx - 10, 0) and adas_str.lower() != "none":
+            return f"""
+                <div style='text-align: right; color: green; font-weight: bold; font-size: 18px;'>
+                    Enable: {adas_str}
+                </div>
+            """
         # Show Disable message from 10 points before end to 10 points after end
         if max(end_idx - 10, 0) <= vehicle_idx <= min(end_idx + 10, len(route_geometry) - 1) and adas_str.lower() != "none":
             return f"""
                 <div style='text-align: right; color: orange; font-weight: bold; font-size: 18px;'>
                     In 100 metres, Disable: {adas_str}
-                </div>
-            """
-        # Show Enable message from 5 points before start until 10 points before end
-        if max(start_idx - 5, 0) <= vehicle_idx < max(end_idx - 10, 0) and adas_str.lower() != "none":
-            return f"""
-                <div style='text-align: right; color: green; font-weight: bold; font-size: 18px;'>
-                    In 100 metres, Enable: {adas_str}
                 </div>
             """
     return None
