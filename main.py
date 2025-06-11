@@ -27,34 +27,34 @@ def process_route(source, destination, autonomous_level):
 
     highway_identifier = HighwayIdentifier(intersection_data)
     grouped_highways = highway_identifier.group_highways()
-    highway_identifier.save_grouped_to_csv(grouped_highways, "grouped_highways.csv")
+    # highway_identifier.save_grouped_to_csv(grouped_highways, "grouped_highways.csv")
 
     major_road_identifier = MajorRoadIdentifier(intersection_data)
     grouped_major_roads = major_road_identifier.group_major_roads()
-    major_road_identifier.save_grouped_to_csv(grouped_major_roads, "grouped_major_roads.csv")
+    # major_road_identifier.save_grouped_to_csv(grouped_major_roads, "grouped_major_roads.csv")
 
     local_road_identifier = LocalRoadIdentifier(intersection_data)
     grouped_local_roads = local_road_identifier.group_local_roads()
-    local_road_identifier.save_grouped_to_csv(grouped_local_roads, "grouped_local_roads.csv")
+    # local_road_identifier.save_grouped_to_csv(grouped_local_roads, "grouped_local_roads.csv")
 
     grouper = CombinedRoadGrouper(grouped_highways, grouped_major_roads)
     combined_segments = grouper.combine()
-    grouper.save_combined_to_csv(combined_segments, "combined_highway_major_road.csv")
+    # grouper.save_combined_to_csv(combined_segments, "combined_highway_major_road.csv")
 
     # ADAS processing based on autonomous level
     adas_segments = []
     if autonomous_level == "Level 0":
         adas_processor = ADASProcessorLevel0(combined_segments)
         adas_segments = adas_processor.process_adas()
-        adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level0.csv")
+        # adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level0.csv")
     elif autonomous_level == "Level 1":
         adas_processor = ADASProcessorLevel1(grouped_highways, grouped_major_roads)
         adas_segments = adas_processor.process_adas()
-        adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level1.csv")
+        # adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level1.csv")
     elif autonomous_level == "Level 2":
         adas_processor = ADASProcessorLevel2(grouped_highways, grouped_major_roads, grouped_local_roads)
         adas_segments = adas_processor.process_adas()
-        adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level2.csv")
+        # adas_processor.save_adas_to_csv(adas_segments, "adas_segments_level2.csv")
 
     add_adas_colored_route(route_geometry, adas_segments, "route_map_with_adas.html")
 

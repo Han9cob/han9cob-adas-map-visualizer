@@ -52,11 +52,11 @@ class CombinedRoadGrouper:
 
         return combined
 
-    def save_combined_to_csv(self, combined_data, output_csv):
-        import csv
-        with open(output_csv, "w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Start Coordinates", "End Coordinates", "Road Types", "Total Distance (km)", "Total Duration (min)"])
-            for row in combined_data:
-                writer.writerow(row)
-        print(f"Combined road data saved to: {output_csv}")
+    # def save_combined_to_csv(self, combined_data, output_csv):
+    #     import csv
+    #     with open(output_csv, "w", newline="") as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow(["Start Coordinates", "End Coordinates", "Road Types", "Total Distance (km)", "Total Duration (min)"])
+    #         for row in combined_data:
+    #             writer.writerow(row)
+    #     # print(f"Combined road data saved to: {output_csv}")

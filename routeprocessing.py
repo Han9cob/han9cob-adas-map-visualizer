@@ -62,10 +62,10 @@ class RouteProcessor:
                     json.dump(data, file, indent=4)
 
                 # Print the route details
-                print("Route details saved to:", output_file)
+                #print("Route details saved to:", output_file)
                 #print("Route geometry (coordinates):", data["routes"][0]["geometry"]["coordinates"])
-                print("Total distance (meters):", data["routes"][0]["distance"])
-                print("Total duration (seconds):", data["routes"][0]["duration"])
+                #print("Total distance (meters):", data["routes"][0]["distance"])
+                #print("Total duration (seconds):", data["routes"][0]["duration"])
 
                 # Extract the route geometry
                 route_geometry = data["routes"][0]["geometry"]["coordinates"]
@@ -87,7 +87,7 @@ class RouteProcessor:
 
                 # Save the map to an HTML file
                 route_map.save(map_file)
-                print("Route map saved to:", map_file)
+                #print("Route map saved to:", map_file)
 
                 # Extract intersection data and save to CSV
                 steps = data["routes"][0]["legs"][0]["steps"]

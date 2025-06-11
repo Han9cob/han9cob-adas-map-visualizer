@@ -1,4 +1,5 @@
 import folium
+import csv
 
 def get_color_for_adas(adas_list):
     adas_set = set([a.upper() for a in adas_list])
@@ -56,7 +57,7 @@ def add_adas_markers_to_map(route_geometry, adas_segments, output_map_path):
         ).add_to(m)
 
     m.save(output_map_path)
-    print(f"ADAS markers added and map saved to: {output_map_path}")
+    # print(f"ADAS markers added and map saved to: {output_map_path}")
 
 def add_adas_colored_route(route_geometry, adas_segments, output_map_path):
     """
@@ -147,4 +148,21 @@ def add_adas_colored_route(route_geometry, adas_segments, output_map_path):
             ).add_to(m)
 
     m.save(output_map_path)
-    print(f"ADAS-colored route map saved to: {output_map_path}")
+    # print(f"ADAS-colored route map saved to: {output_map_path}")
+
+# def save_adas_segments_to_csv(adas_segments, output_csv):
+#     """
+#     Save the ADAS segments to a CSV file.
+#     """
+#     with open(output_csv, "w", newline="") as file:
+#         writer = csv.writer(file)
+#         writer.writerow(["Start Coordinates", "End Coordinates", "ADAS", "Distance (km)", "Duration (min)"])
+#         for seg in adas_segments:
+#             writer.writerow([
+#                 seg["start"],
+#                 seg["end"],
+#                 ", ".join(seg["ADAS"]),
+#                 seg.get("distance_km", ""),
+#                 seg.get("duration_min", "")
+#             ])
+#     # print(f"ADAS segments saved to: {output_csv}")

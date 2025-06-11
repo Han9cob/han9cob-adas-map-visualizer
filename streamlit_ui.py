@@ -26,14 +26,14 @@ def get_adas_message(vehicle_idx, route_geometry, adas_segments):
         if max(end_idx - 10, 0) <= vehicle_idx <= min(end_idx + 10, len(route_geometry) - 1) and adas_str.lower() != "none":
             return f"""
                 <div style='text-align: right; color: orange; font-weight: bold; font-size: 18px;'>
-                    Disable: {adas_str}
+                    In 100 metres, Disable: {adas_str}
                 </div>
             """
         # Show Enable message from 5 points before start until 10 points before end
         if max(start_idx - 5, 0) <= vehicle_idx < max(end_idx - 10, 0) and adas_str.lower() != "none":
             return f"""
                 <div style='text-align: right; color: green; font-weight: bold; font-size: 18px;'>
-                    Enable: {adas_str}
+                    In 100 metres, Enable: {adas_str}
                 </div>
             """
     return None

@@ -32,19 +32,19 @@ class ADASProcessorLevel0:
             })
         return adas_segments
 
-    def save_adas_to_csv(self, adas_segments, output_csv):
-        """
-        Save the ADAS segments to a CSV file.
-        """
-        with open(output_csv, "w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Start Coordinates", "End Coordinates", "ADAS", "Distance (km)", "Duration (min)"])
-            for seg in adas_segments:
-                writer.writerow([
-                    seg["start"],
-                    seg["end"],
-                    ", ".join(seg["ADAS"]),
-                    seg["distance_km"],
-                    seg["duration_min"]
-                ])
-        print(f"ADAS segments saved to: {output_csv}")
+    # def save_adas_to_csv(self, adas_segments, output_csv):
+    #     """
+    #     Save the ADAS segments to a CSV file.
+    #     """
+    #     with open(output_csv, "w", newline="") as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow(["Start Coordinates", "End Coordinates", "ADAS", "Distance (km)", "Duration (min)"])
+    #         for seg in adas_segments:
+    #             writer.writerow([
+    #                 seg["start"],
+    #                 seg["end"],
+    #                 ", ".join(seg["ADAS"]),
+    #                 seg["distance_km"],
+    #                 seg["duration_min"]
+    #             ])
+    #     # print(f"ADAS segments saved to: {output_csv}")

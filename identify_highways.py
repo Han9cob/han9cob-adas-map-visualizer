@@ -75,10 +75,10 @@ class HighwayIdentifier:
 
         return grouped
 
-    def save_grouped_to_csv(self, grouped_data, output_csv):
-        with open(output_csv, "w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Start Coordinates", "End Coordinates", "Road Type", "Total Distance (km)", "Total Duration (min)"])
-            for row in grouped_data:
-                writer.writerow(row)
-        print(f"Grouped highway data saved to: {output_csv}")
+    # def save_grouped_to_csv(self, grouped_data, output_csv):
+    #     with open(output_csv, "w", newline="") as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow(["Start Coordinates", "End Coordinates", "Road Type", "Total Distance (km)", "Total Duration (min)"])
+    #         for row in grouped_data:
+    #             writer.writerow(row)
+    #     # print(f"Grouped highway data saved to: {output_csv}")
