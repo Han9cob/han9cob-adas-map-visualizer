@@ -12,9 +12,9 @@ def get_color_for_adas(adas_list):
         return "green"
     if "TSR" in adas_set and len(adas_set) == 1:
         return "orange"
-    if "ELKA" in adas_set or "ELKa" in adas_set or "ELKS" in adas_set:
+    if "ELKA" in adas_set and len(adas_set) == 1:
         return "yellow"
-    if "TJA" in adas_set:
+    if "TJA" in adas_set and len(adas_set) == 1:
         return "orange"
     return None  # None means no ADAS, so keep blue
 
@@ -101,19 +101,28 @@ def add_adas_colored_route(route_geometry, adas_segments, output_map_path):
     # Build a list of colored segments
     colored_segments = []
     last_idx = 0
+
+    # Prepare a list of (start_idx, end_idx, color) for all ADAS segments
+    adas_colored_ranges = []
     for seg in adas_segments:
         start_idx = find_closest_index(seg["start"])
         end_idx = find_closest_index(seg["end"])
         if start_idx > end_idx:
             start_idx, end_idx = end_idx, start_idx
         color = get_color_for_adas(seg["ADAS"])
-        if color:  # Only color if ADAS is active
-            # Add blue segment before this ADAS segment if needed
-            if last_idx < start_idx:
-                colored_segments.append((route_geometry[last_idx:start_idx+1], "blue"))
-            # Add the ADAS-colored segment
-            colored_segments.append((route_geometry[start_idx:end_idx+1], color))
-            last_idx = end_idx + 1
+        if color:
+            adas_colored_ranges.append((start_idx, end_idx, color))
+
+    # Sort by start_idx to process in order
+    adas_colored_ranges.sort()
+
+    for start_idx, end_idx, color in adas_colored_ranges:
+        # Add blue segment before this ADAS segment if needed
+        if last_idx < start_idx:
+            colored_segments.append((route_geometry[last_idx:start_idx], "blue"))
+        # Add the ADAS-colored segment (always include at least one point)
+        colored_segments.append((route_geometry[start_idx:end_idx+1], color))
+        last_idx = end_idx + 1
 
     # Add remaining blue segment if any
     if last_idx < len(route_geometry):
@@ -121,12 +130,21 @@ def add_adas_colored_route(route_geometry, adas_segments, output_map_path):
 
     # Draw all segments
     for coords, color in colored_segments:
-        folium.PolyLine(
-            locations=[[lat, lon] for lon, lat in coords],
-            color=color,
-            weight=7,
-            opacity=0.9
-        ).add_to(m)
+        if len(coords) > 1:
+            folium.PolyLine(
+                locations=[[lat, lon] for lon, lat in coords],
+                color=color,
+                weight=7,
+                opacity=0.9
+            ).add_to(m)
+        elif len(coords) == 1:
+            folium.CircleMarker(
+                location=[coords[0][1], coords[0][0]],
+                radius=5,
+                color=color,
+                fill=True,
+                fill_color=color
+            ).add_to(m)
 
     m.save(output_map_path)
     print(f"ADAS-colored route map saved to: {output_map_path}")

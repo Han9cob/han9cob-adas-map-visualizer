@@ -15,7 +15,7 @@ class ADASProcessorLevel2:
             - TJA if distance > 1 km
         For each local road segment:
             - CAS if distance > 1 km
-        Otherwise: None
+        Otherwise: None (do not include in output)
         Returns a list of dicts with start, end, road_type, ADAS list, distance_km, duration_min.
         """
         adas_segments = []
@@ -31,7 +31,7 @@ class ADASProcessorLevel2:
             elif 1 < distance_km <= 5:
                 adas_list = ["ELKA"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,
@@ -50,7 +50,7 @@ class ADASProcessorLevel2:
             if distance_km > 1:
                 adas_list = ["TJA"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,
@@ -69,7 +69,7 @@ class ADASProcessorLevel2:
             if distance_km > 1:
                 adas_list = ["CAS"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,

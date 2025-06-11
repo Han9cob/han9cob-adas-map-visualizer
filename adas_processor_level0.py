@@ -9,7 +9,7 @@ class ADASProcessorLevel0:
         For each combined segment:
         - LDW & TSR if distance > 10 km and duration > 5 min
         - TSR if distance > 2 km
-        - None otherwise
+        - None otherwise (do not include in output)
         Returns a list of dicts with start, end, ADAS list, distance_km, and duration_min.
         """
         adas_segments = []
@@ -22,7 +22,7 @@ class ADASProcessorLevel0:
             elif distance_km > 2:
                 adas_list = ["TSR"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,

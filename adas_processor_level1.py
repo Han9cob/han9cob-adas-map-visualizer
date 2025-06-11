@@ -9,10 +9,10 @@ class ADASProcessorLevel1:
         """
         For each highway segment:
             - ACC + LDW if distance > 5 km
-            - ELKA if 2 km < distance <= 5 km
+            - ELKA if 1 < distance <= 5 km
         For each major road segment:
             - TSR if distance > 2 km
-        Otherwise: None
+        Otherwise: None (do not include in output)
         Returns a list of dicts with start, end, ADAS list, distance_km, duration_min, and road_type.
         """
         adas_segments = []
@@ -28,7 +28,7 @@ class ADASProcessorLevel1:
             elif 1 < distance_km <= 5:
                 adas_list = ["ELKA"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,
@@ -47,7 +47,7 @@ class ADASProcessorLevel1:
             if distance_km > 2:
                 adas_list = ["TSR"]
             else:
-                adas_list = ["None"]
+                continue  # Skip segments with no ADAS
             adas_segments.append({
                 "start": start,
                 "end": end,
